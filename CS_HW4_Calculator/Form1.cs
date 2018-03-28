@@ -18,9 +18,10 @@ namespace CS_HW4_Calculator
             InitializeComponent();
         }
 
+
         Calculator calculator = new Calculator();
         
-        decimal RunningTotal = 0.0m; ///USED FOR UPDATED LIST TOTAL
+        decimal RunningTotal = 0.0m; ///USED FOR UPDATED LIST TOTAL to
 
         /// <summary>
         /// 
