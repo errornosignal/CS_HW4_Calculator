@@ -23,6 +23,7 @@ namespace CS_HW4_Calculator
         
         decimal RunningTotal = 0.0m; ///USED FOR UPDATED LIST TOTAL to
 
+
         /// <summary>
         /// 
         /// </summary>
