@@ -1,476 +1,4 @@
-﻿//using System;
-//using System.Collections;
-//using System.Collections.Generic;
-//using System.ComponentModel;
-//using System.Data;
-//using System.Drawing;
-//using System.Linq;
-//using System.Media;
-//using System.Text;
-//using System.Threading.Tasks;
-//using System.Windows.Forms;
-
-//namespace CS_HW4_Calculator
-//{
-//    public partial class Form1 : Form
-//    {
-//        public Form1()
-//        {
-//            InitializeComponent();
-//        }
-
-//        Calculator calculator = new Calculator();
-//        double DisplayValue = 0.0;
-//        string Operation = "";
-
-//        bool OperatorPressed = false;
-//        bool FunctionPressed = false;
-
-
-//        private void Form1_Load_1(object sender, EventArgs e)
-//        {
-//            InputTextBox.Text = "0";
-//        	InputTextBox.Select(InputTextBox.Text.Length, 0);
-
-//            OneButton.Click += new EventHandler(Num_Click);
-//            TwoButton.Click += new EventHandler(Num_Click);
-//            ThreeButton.Click += new EventHandler(Num_Click);
-//            FourButton.Click += new EventHandler(Num_Click);
-//            FiveButton.Click += new EventHandler(Num_Click);
-//            SixButton.Click += new EventHandler(Num_Click);
-//            SevenButton.Click += new EventHandler(Num_Click);
-//            EightButton.Click += new EventHandler(Num_Click);
-//            NineButton.Click += new EventHandler(Num_Click);
-//            ZeroButton.Click += new EventHandler(Num_Click);
-//            DotButton.Click += new EventHandler(Num_Click);
-
-//            AddButton.Click += new EventHandler(Operator_Click);
-//            SubtractButton.Click += new EventHandler(Operator_Click);
-//            MultiplyButton.Click += new EventHandler(Operator_Click);
-//            DivideButton.Click += new EventHandler(Operator_Click);
-
-//            SqrtButton.Click += new EventHandler(Function_Click);
-//            RecipButton.Click += new EventHandler(Function_Click);
-//            PlusMinusButton.Click += new EventHandler(Function_Click);
-
-//            EqualsButton.Click += new EventHandler(EqualsButton_Click);
-//        }
-
-
-//        private void Num_Click(object sender, EventArgs e)
-//        {
-//            try
-//            {
-//                if ((InputTextBox.Text == "0") || OperatorPressed)
-//                {
-//                    InputTextBox.Clear();
-//                }
-//                else { /*doNothing();*/ }
-
-//                OperatorPressed = false;
-//                FunctionPressed = false;
-
-//                InputTextBox.Focus();
-//                InputTextBox.Select(InputTextBox.Text.Length, 0);
-
-//                var Button = sender as Button;
-//                const int MaxLength = 16;
-
-//                if (InputTextBox.Text.Length < MaxLength)
-//                {
-//                    if ((Button.Text == ".") && InputTextBox.Text.Contains("."))
-//                    {
-//                        SystemSounds.Beep.Play();
-//                    }
-//                    else
-//                    {
-//                        InputTextBox.Text += Button.Text;
-//                    }
-//                }
-//                else
-//                {
-//                    SystemSounds.Beep.Play();
-//                }
-//            }
-//            catch (Exception ex)
-//            {
-//                MessageBox.Show("Unexpected Error!\n" + ex.Message);
-//            }
-//        }
-
-
-
-//        private void Operator_Click(object sender, EventArgs e)
-//        {
-//            var Button = sender as Button;
-//            Operation = Button.Text;
-
-//            if (InputTextBox.Text == "")
-//            {
-//                ResetText();
-//            } else { /*doNothing*/ }
-
-
-//            if (Calculator.CurrentValue != 0)
-//            {
-//                EqualsButton.PerformClick();
-
-//                OperatorPressed = true;
-//                Operation = Button.Text;
-//                HistoryTextBox.Text += InputTextBox.Text + " " + Operation + " ";
-
-//            }
-//            else
-//            {
-//                OperatorPressed = true;
-//                Operation = Button.Text;
-//                HistoryTextBox.Text += InputTextBox.Text + " " + Operation + " ";
-//                DisplayValue = StringToDouble(InputTextBox.Text);
-//            }
-
-
-//        }
-
-
-//        private void Function_Click(object sender, EventArgs e)
-//        {
-//            var Button = sender as Button;
-//            var Function = Button.Text;
-//            var DisplayValue = StringToDouble(InputTextBox.Text);
-
-//            FunctionPressed = true;
-
-//            switch (Function)
-//            {
-//                case "√":
-//                    HistoryTextBox.Text += "sqrt(" + InputTextBox.Text + ") ";
-//                    calculator.SquareRoot(DisplayValue);
-//                    break;
-//                case "1/x":
-//                    HistoryTextBox.Text += "recip(" + InputTextBox.Text + ") ";
-//                    calculator.Reciprocal(DisplayValue);
-//                    break;
-//                case "+/-":
-//                    calculator.Inverse(DisplayValue);
-//                    break;
-//                default:
-//                    //doNothing();
-//                    break;
-//            }
-
-//            calculator.Equals(DisplayValue);
-
-//            InputTextBox.Text = Calculator.Operand1.ToString();
-//        }
-
-//        private void EqualsButton_Click(object sender, EventArgs e)
-//        {
-//            //DisplayValue = StringToDouble(InputTextBox.Text);
-
-//            switch (Operation)
-//            {
-//                case "+":
-//                    calculator.Add(DisplayValue);
-//                    calculator.Equals(DisplayValue);
-//                    //Calculator.CurrentValue += DisplayValue;
-//                    break;
-//                case "-":
-//                    calculator.Subtract(DisplayValue);
-//                    calculator.Equals(DisplayValue);
-//                    //Calculator.CurrentValue -= DisplayValue;
-//                    //Value -= Calculator.Operand1;
-//                    break;
-//                case "*":
-//                    calculator.Multiply(DisplayValue);
-//                    calculator.Equals(DisplayValue);
-//                    //Value *= Calculator.Operand1;
-//                    break;
-//                case "/":
-//                    calculator.Divide(DisplayValue);
-//                    calculator.Equals(DisplayValue);
-//                    //Value /= Calculator.Operand1;
-//                    break;
-//                default:
-//                    //doNothing();
-//                    break;
-//            }
-
-//            HistoryTextBox.Clear();
-//            Operation = "";
-//            //calculator.Equals(DisplayValue);
-//            InputTextBox.Text = Calculator.CurrentValue.ToString();
-
-
-//        }
-
-
-//        private void ClearButton_Click(object sender, EventArgs e)
-//        {
-//            DisplayValue = 0;
-//            calculator.Clear();
-//            HistoryTextBox.Clear();
-//            InputTextBox.Clear();
-//            ResetText();
-
-//            InputTextBox.Focus();
-//            InputTextBox.Select(InputTextBox.Text.Length, 0);
-//        }
-
-
-//        private void CEButton_Click(object sender, EventArgs e)
-//        {
-//            ResetText();
-//        }
-
-
-//        private void BackButton_Click(object sender, EventArgs e)
-//        {
-//            if (InputTextBox.TextLength != 0)
-//            {
-//                InputTextBox.Text = InputTextBox.Text.Remove(InputTextBox.Text.Length - 1, 1);
-//            }
-//            else { /*doNothing*/ }
-//        }
-
-
-//        private double StringToDouble(string DisplayValue)
-//        {
-//            var DoubleIsValid = double.TryParse(DisplayValue, out var NewDouble);
-
-//            if (DoubleIsValid)
-//            {
-//                return NewDouble;
-//            }
-//            else
-//            {
-//                return 0.0;
-//            }
-//        }
-
-
-//        private void InputTextBox_KeyPress_1(object sender, KeyPressEventArgs e)
-//    	{
-//            //ASCII Values as int constants
-//            const int BS = 8;        //BS
-//            const int Dot = 46;      //'.'
-//            const int Add = 43;      //'+'
-//            const int Sub = 45;      //'-'
-//            const int Mult = 42;     //'*'
-//            const int Div = 47;      //'/'
-
-//            var c = e.KeyChar;
-
-//            InputTextBox.Focus();
-//            InputTextBox.Select(InputTextBox.Text.Length, 0);
-
-//            if (c == Dot && InputTextBox.Text.Contains("."))
-//            {
-//                SystemSounds.Beep.Play();
-//            }
-//            else { /*doNothing();*/ }
-
-//            if (c == Dot && InputTextBox.Text.IndexOf('.') != -1)
-//            {
-//                e.Handled = true;
-//                return;
-//            }
-//            else { /*doNothing();*/ }
-
-//            if (!char.IsDigit(c) && c != BS && c != '.')
-//            {
-//                e.Handled = true;
-//            }
-//            else { /*doNothing();*/ }
-
-//            if (char.IsDigit(c))
-//            {
-//                FixTextBox();
-//            }
-//            else { /*doNothing();*/ }
-
-//            if (c == Add)
-//            {
-//                AddButton.PerformClick();
-//            }
-//            else if (c == Sub)
-//            {
-//                SubtractButton.PerformClick();
-//            }
-//            else if (c == Mult)
-//            {
-//                MultiplyButton.PerformClick();
-//            }
-//            else if (c == Div)
-//            {
-//                DivideButton.PerformClick();
-//            }
-//            else { /*doNothing();*/ }
-//        }
-
-
-//        private void InputTextBox_KeyUp(object sender, KeyEventArgs e)
-//        {
-//            if(InputTextBox.Text.Length == 0)
-//            {
-//                ResetText();
-//            }
-//            else { /*doNothing();*/ }
-//        }
-
-
-//        private void FixTextBox()
-//        {
-//            if ((InputTextBox.Text == "0") || OperatorPressed)
-//            {
-//                InputTextBox.Clear();
-//            }
-//            else { /*doNothing();*/ }
-
-//            OperatorPressed = false;
-//        }
-
-
-//        public override void ResetText()
-//        {
-//            InputTextBox.Text = "0";
-//        }
-
-
-
-
-//        ///// <summary>
-//        ///// 
-//        ///// </summary>
-//        ///// <param name="sender"></param>
-//        ///// <param name="e"></param>
-//        //private void AddButton_Click_1(object sender, EventArgs e)
-//        //{
-//        //    var DisplayValue = StringToDouble(userInput);
-//        //    calculator.Add(DisplayValue);
-//        //    HistoryTextBox.Text += InputTextBox.Text + " + ";
-//        //    InputTextBox.Clear();
-
-
-//        //    //var DisplayValue = StringToDouble(InputTextBox.Text);
-//        //    //InputTextBox.Clear();
-
-//        //    //calculator.Add(DisplayValue);
-
-//        //    //ValueList.Add(DisplayValue);
-//        //    //OperatorList.Add("+");
-
-//        //    //HistoryTextBox.Text += ValueList[ValueList.Count - 1] + " " + OperatorList[OperatorList.Count - 1] + " ";
-
-
-
-//        //    ////InputTextBox.Text = RunningTotal.ToString();
-
-//        //    ////InputTextBox.Clear();
-
-//        //    //if (RunningTotal > 0 && ValueList.Count > 1)
-//        //    //{
-//        //    //    for (int i = 0; i < ValueList.Count; i++)
-//        //    //    {
-//        //    //        RunningTotal += ValueList[i];
-//        //    //    }
-
-
-
-
-//        //    //    InputTextBox.Text = RunningTotal.ToString();
-//        //    //}
-//        //    //else { /*doNothing();*/ }
-//        //}
-
-
-
-
-
-//        ///// <summary>
-//        ///// 
-//        ///// </summary>
-//        ///// <param name="sender"></param>
-//        ///// <param name="e"></param>
-//        //private void SubtractButton_Click_1(object sender, EventArgs e)
-//        //{
-//        //    var DisplayValue = StringToDouble(InputTextBox.Text);
-//        //    calculator.Subtract(DisplayValue);
-//        //    HistoryTextBox.Text += InputTextBox.Text + " - ";
-//        //    InputTextBox.Clear();
-//        //}
-
-//        ///// <summary>
-//        ///// 
-//        ///// </summary>
-//        ///// <param name="sender"></param>
-//        ///// <param name="e"></param>
-//        //private void MultiplyButton_Click_1(object sender, EventArgs e)
-//        //{
-//        //    var DisplayValue = StringToDouble(InputTextBox.Text);
-//        //    calculator.Multiply(DisplayValue);
-//        //    HistoryTextBox.Text += InputTextBox.Text + " * ";
-//        //    InputTextBox.Clear();
-//        //}
-
-//        ///// <summary>
-//        ///// 
-//        ///// </summary>
-//        ///// <param name="sender"></param>
-//        ///// <param name="e"></param>
-//        //private void DivideButton_Click_1(object sender, EventArgs e)
-//        //{
-//        //    var DisplayValue = StringToDouble(InputTextBox.Text);
-//        //    calculator.Divide(DisplayValue);
-//        //    HistoryTextBox.Text += InputTextBox.Text + " / ";
-//        //    InputTextBox.Clear();
-//        //}
-
-//        ///// <summary>
-//        ///// 
-//        ///// </summary>
-//        ///// <param name="sender"></param>
-//        ///// <param name="e"></param>
-//        //private void SqrtButton_Click_1(object sender, EventArgs e)
-//        //{
-//        //    HistoryTextBox.Text += "sqrt(" + InputTextBox.Text + ")";
-//        //    var DisplayValue = StringToDouble(InputTextBox.Text);
-//        //    calculator.SquareRoot(DisplayValue);
-//        //    calculator.Equals(DisplayValue);
-//        //    InputTextBox.Text = Calculator.Operand1.ToString();
-//        //    InputTextBox.Clear();
-//        //}
-
-//        ///// <summary>
-//        ///// 
-//        ///// </summary>
-//        ///// <param name="sender"></param>
-//        ///// <param name="e"></param>
-//        //private void RecipButton_Click_1(object sender, EventArgs e)
-//        //{
-//        //    var DisplayValue = StringToDouble(InputTextBox.Text);
-//        //    calculator.Reciprocal(DisplayValue);
-//        //    calculator.Equals(DisplayValue);
-//        //    InputTextBox.Text = Calculator.Operand1.ToString();
-//        //    InputTextBox.Clear();
-//        //}
-
-//        ///// <summary>
-//        ///// 
-//        ///// </summary>
-//        ///// <param name="sender"></param>
-//        ///// <param name="e"></param>
-//        //private void PlusMinusButton_Click(object sender, EventArgs e)
-//        //{
-//        //    var DisplayValue = StringToDouble(InputTextBox.Text);
-//        //    calculator.Inverse(DisplayValue);
-//        //    calculator.Equals(DisplayValue);
-//        //    InputTextBox.Text = Calculator.Operand1.ToString();
-//        //    InputTextBox.Clear();
-//        //}
-//    }
-//}
-
-using System;
+﻿using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -486,15 +14,21 @@ namespace CS_HW4_Calculator
 {
     public partial class Form1 : Form
     {
+        List<string> HistoryList = new List<string>();
+
         double Value = 0.0;
         string Operation = "";
         string Function = "";
         bool OperatorPressed = false;
+        private bool EqualsPressed = false;
+        string LastOperation = "";
+
 
         public Form1()
         {
             InitializeComponent();
         }
+
 
         private void Form1_Load_1(object sender, EventArgs e)
         {
@@ -531,14 +65,16 @@ namespace CS_HW4_Calculator
             BackButton.Click += new EventHandler(BackButton_Click);
             CEButton.Click += new EventHandler(CEButton_Click);
             ClearButton.Click += new EventHandler(ClearButton_Click);
+            HistoryButton.Click += new EventHandler(HistoryButton_Click);
         }
 
 
         private void Num_Click(object sender, EventArgs e)
         {
-            if ((InputTextBox.Text == "0")|| (OperatorPressed))
+            if ((InputTextBox.Text == "0") || OperatorPressed || EqualsPressed)
             {
                 InputTextBox.Clear();
+                
             } else { /*doNothing();*/ }
 
             OperatorPressed = false;
@@ -565,22 +101,31 @@ namespace CS_HW4_Calculator
         private void Operator_Click(object sender, EventArgs e)
         {
             var Button = sender as Button;
+            
 
-            if (Value != 0)
+            if (!Value.Equals(0.0))
             {
                 OperatorPressed = true;
                 Operation = Button.Text;
-                HistoryTextBox.Text += InputTextBox.Text + " " + Operation + " ";
 
-                ResolveOperators(false, false);
+                LastOperation = InputTextBox.Text + " " + Operation + " ";
+                HistoryTextBox.Text += LastOperation;
+
+                EqualsPressed = false;
+                ResolveOperators();
             }
             else
             {
                 OperatorPressed = true;
                 Operation = Button.Text;
-                HistoryTextBox.Text += InputTextBox.Text + " " + Operation + " ";
+
+                LastOperation = InputTextBox.Text + " " + Operation + " ";
+                HistoryTextBox.Text += LastOperation;
 
                 Value = Double.Parse(InputTextBox.Text);
+
+                EqualsPressed = false;
+                //ResolveOperators();
             }
         }
 
@@ -588,32 +133,36 @@ namespace CS_HW4_Calculator
         {
 
             var Button = sender as Button;
+            var LastOperation = "";
             Function = Button.Text;
-
+            
             switch (Function)
             {
 
                 case "√":
-                    HistoryTextBox.Text += "sqrt(" + InputTextBox.Text + ") ";
+                    LastOperation = "sqrt(" + InputTextBox.Text + ") ";
                     break;
                 case "1/x":
-                    HistoryTextBox.Text += "recip(" + InputTextBox.Text + ") ";
+                    LastOperation = "recip(" + InputTextBox.Text + ") ";
                     break;
                 case "+/-":
-                    HistoryTextBox.Text += "negate(" + InputTextBox.Text + ") ";
+                    LastOperation = "negate(" + InputTextBox.Text + ") ";
                     break;
                 default:
                     //doNothing();
                     break;
             }
+            //HistoryList.Add(LastOperation);
+            HistoryTextBox.Text = LastOperation;
 
-            ResolveOperators(false, true);
+            EqualsPressed = false;
+            ResolveOperators();
         }
 
         private void EqualsButton_Click(object sender, EventArgs e)
         {
-            HistoryTextBox.Clear();
-            ResolveOperators(true, false);
+            EqualsPressed = true;
+            ResolveOperators();
         }
 
         private void CEButton_Click(object sender, EventArgs e)
@@ -642,61 +191,107 @@ namespace CS_HW4_Calculator
 
         private void ClearButton_Click(object sender, EventArgs e)
         {
-            Value = 0;
+            Value = 0.0;
             Operation = "";
             Function = "";
             OperatorPressed = false;
-
+            LastOperation = "";
+            
             HistoryTextBox.Clear();
             InputTextBox.Text = "0";
             InputTextBox.Select(InputTextBox.Text.Length, 0);
         }
 
-        private void ResolveOperators(bool EqualsPressed, bool Func)
+        private void HistoryButton_Click(object sender, EventArgs e)
         {
-            switch (Operation)
+            Form2 HistoryForm = new Form2();
+            var message = string.Join(Environment.NewLine, HistoryList);
+            HistoryForm.HistoryRichTextBox.Text = message;
+            HistoryForm.Show();
+        }
+
+        private void ResolveOperators()
+        {
+            var HiddenValue = Double.Parse(InputTextBox.Text);
+
+            if (Operation != "")
             {
-                case "+":
-                    InputTextBox.Text = (Value + Double.Parse(InputTextBox.Text)).ToString();
-                    break;
-                case "-":
-                    InputTextBox.Text = (Value - Double.Parse(InputTextBox.Text)).ToString();
-                    break;
-                case "*":
-                    InputTextBox.Text = (Value * Double.Parse(InputTextBox.Text)).ToString();
-                    break;
-                case "/":
-                    InputTextBox.Text = (Value / Double.Parse(InputTextBox.Text)).ToString();
-                    break;
-                default:
-                    //doNothing();
-                    break;
+                var DivByZero = false;
+                InputTextBox.Clear();
+                switch (Operation)
+                {
+                    case "+": 
+                        Value += HiddenValue;
+                        break;
+                    case "-":
+                        Value -= HiddenValue;
+                        break;
+                    case "*":
+                        Value *= HiddenValue;
+                        break;
+                    case "/":
+                        if (HiddenValue.Equals(0.0))
+                        {
+                            DivByZero = true;
+                            MessageBox.Show("Cannot divide by zero");
+                            ClearButton.PerformClick();
+                        }
+                        else
+                        {
+                            Value /= HiddenValue;
+                        }
+                        break;
+                    default:
+                        //doNothing();
+                        break;
+                }
+
+                if (EqualsPressed && !DivByZero)
+                {
+                    HistoryTextBox.Text += (HiddenValue.ToString() + " = " + Value.ToString());
+                    HistoryList.Add(HistoryTextBox.Text);
+                    HistoryTextBox.Clear();
+                }
+                else { /*doNothing();*/ }
+            }
+            else if (Function != "")
+            {
+                switch (Function)
+                {
+                    case "√":
+                        Value = Math.Sqrt(Double.Parse(InputTextBox.Text));
+                        InputTextBox.Text = Value.ToString();
+                        break;
+                    case "1/x":
+                        Value = (1.0 / Double.Parse(InputTextBox.Text));
+                        InputTextBox.Text = Value.ToString();
+                        break;
+                    case "+/-":
+                        Value = (-1 * Double.Parse(InputTextBox.Text));
+                        InputTextBox.Text = Value.ToString();
+                        break;
+                    default:
+                        //doNothing();
+                        break;
+                }
+                HistoryList.Add(HistoryTextBox.Text + " = " + InputTextBox.Text);
             }
 
-            switch (Function)
+            if ((Operation == "") && (Function == ""))
             {
-                case "√":
-                    InputTextBox.Text = (Math.Sqrt(Double.Parse(InputTextBox.Text))).ToString();
-                    break;
-                case "1/x":
-                    InputTextBox.Text = (1.0 / Double.Parse(InputTextBox.Text)).ToString();
-                    break;
-                case "+/-":
-                    InputTextBox.Text = (-1 * Double.Parse(InputTextBox.Text)).ToString();
-                    break;
-                default:
-                    //doNothing();
-                    break;
+                InputTextBox.Text = HiddenValue.ToString();
             }
-
-            if (!EqualsPressed && !Func)
+            else
             {
-                Value = Double.Parse(InputTextBox.Text);
-            } 
-        	else if (EqualsPressed)
-        	{
+                InputTextBox.Text = Value.ToString();
+            }
+            
+
+            if (Function != "" || EqualsPressed)
+            {
                 Value = 0;
-        	}
+            } else { /*doNothing();*/ }
+
         }
 
         
@@ -763,11 +358,10 @@ namespace CS_HW4_Calculator
         {
             if (InputTextBox.Text.Length == 0)
             {
-                ResetText();
+                InputTextBox.Text= "0";
             }
             else { /*doNothing();*/ }
         }
-
 
         private void FixTextBox()
         {

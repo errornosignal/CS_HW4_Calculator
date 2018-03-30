@@ -52,7 +52,8 @@
             this.SqrtButton = new System.Windows.Forms.Button();
             this.HistoryTextBox = new System.Windows.Forms.TextBox();
             this.InputTextBox = new System.Windows.Forms.TextBox();
-            this.button1 = new System.Windows.Forms.Button();
+            this.HistoryButton = new System.Windows.Forms.Button();
+            this.ValueLabel = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // BackButton
@@ -301,15 +302,23 @@
             this.InputTextBox.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.InputTextBox_KeyPress_1);
             this.InputTextBox.KeyUp += new System.Windows.Forms.KeyEventHandler(this.InputTextBox_KeyUp);
             // 
-            // button1
+            // HistoryButton
             // 
-            this.button1.Enabled = false;
-            this.button1.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.button1.Location = new System.Drawing.Point(192, 111);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(39, 38);
-            this.button1.TabIndex = 24;
-            this.button1.UseVisualStyleBackColor = true;
+            this.HistoryButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.HistoryButton.Location = new System.Drawing.Point(192, 111);
+            this.HistoryButton.Name = "HistoryButton";
+            this.HistoryButton.Size = new System.Drawing.Size(39, 38);
+            this.HistoryButton.TabIndex = 24;
+            this.HistoryButton.Text = "...";
+            this.HistoryButton.UseVisualStyleBackColor = true;
+            // 
+            // ValueLabel
+            // 
+            this.ValueLabel.AutoSize = true;
+            this.ValueLabel.Location = new System.Drawing.Point(2, 33);
+            this.ValueLabel.Name = "ValueLabel";
+            this.ValueLabel.Size = new System.Drawing.Size(0, 13);
+            this.ValueLabel.TabIndex = 25;
             // 
             // Form1
             // 
@@ -317,7 +326,8 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(244, 287);
-            this.Controls.Add(this.button1);
+            this.Controls.Add(this.ValueLabel);
+            this.Controls.Add(this.HistoryButton);
             this.Controls.Add(this.InputTextBox);
             this.Controls.Add(this.HistoryTextBox);
             this.Controls.Add(this.SqrtButton);
@@ -381,7 +391,8 @@
         private System.Windows.Forms.Button SqrtButton;
         private System.Windows.Forms.TextBox HistoryTextBox;
         private System.Windows.Forms.TextBox InputTextBox;
-        private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.Button HistoryButton;
+        private System.Windows.Forms.Label ValueLabel;
     }
 }
 
