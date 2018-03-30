@@ -52,30 +52,29 @@
             this.SqrtButton = new System.Windows.Forms.Button();
             this.HistoryTextBox = new System.Windows.Forms.TextBox();
             this.InputTextBox = new System.Windows.Forms.TextBox();
+            this.button1 = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // BackButton
             // 
             this.BackButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.BackButton.Location = new System.Drawing.Point(12, 68);
+            this.BackButton.Location = new System.Drawing.Point(13, 68);
             this.BackButton.Name = "BackButton";
             this.BackButton.RightToLeft = System.Windows.Forms.RightToLeft.No;
             this.BackButton.Size = new System.Drawing.Size(39, 38);
             this.BackButton.TabIndex = 1;
             this.BackButton.Text = "<--";
             this.BackButton.UseVisualStyleBackColor = true;
-            this.BackButton.Click += new System.EventHandler(this.BackButton_Click);
             // 
             // ClearButton
             // 
             this.ClearButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.ClearButton.Location = new System.Drawing.Point(102, 68);
+            this.ClearButton.Location = new System.Drawing.Point(103, 68);
             this.ClearButton.Name = "ClearButton";
             this.ClearButton.Size = new System.Drawing.Size(39, 38);
             this.ClearButton.TabIndex = 3;
             this.ClearButton.Text = "C";
             this.ClearButton.UseVisualStyleBackColor = true;
-            this.ClearButton.Click += new System.EventHandler(this.ClearButton_Click);
             // 
             // OneButton
             // 
@@ -230,13 +229,12 @@
             // CEButton
             // 
             this.CEButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.CEButton.Location = new System.Drawing.Point(57, 68);
+            this.CEButton.Location = new System.Drawing.Point(58, 68);
             this.CEButton.Name = "CEButton";
             this.CEButton.Size = new System.Drawing.Size(39, 38);
             this.CEButton.TabIndex = 2;
             this.CEButton.Text = "CE";
             this.CEButton.UseVisualStyleBackColor = true;
-            this.CEButton.Click += new System.EventHandler(this.CEButton_Click);
             // 
             // EqualsButton
             // 
@@ -247,7 +245,6 @@
             this.EqualsButton.TabIndex = 22;
             this.EqualsButton.Text = "=";
             this.EqualsButton.UseVisualStyleBackColor = true;
-            this.EqualsButton.Click += new System.EventHandler(this.EqualsButton_Click);
             // 
             // RecipButton
             // 
@@ -262,7 +259,7 @@
             // PlusMinusButton
             // 
             this.PlusMinusButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.PlusMinusButton.Location = new System.Drawing.Point(147, 67);
+            this.PlusMinusButton.Location = new System.Drawing.Point(147, 68);
             this.PlusMinusButton.Name = "PlusMinusButton";
             this.PlusMinusButton.Size = new System.Drawing.Size(39, 38);
             this.PlusMinusButton.TabIndex = 4;
@@ -272,7 +269,7 @@
             // SqrtButton
             // 
             this.SqrtButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.SqrtButton.Location = new System.Drawing.Point(192, 111);
+            this.SqrtButton.Location = new System.Drawing.Point(192, 68);
             this.SqrtButton.Name = "SqrtButton";
             this.SqrtButton.Size = new System.Drawing.Size(39, 38);
             this.SqrtButton.TabIndex = 9;
@@ -304,12 +301,23 @@
             this.InputTextBox.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.InputTextBox_KeyPress_1);
             this.InputTextBox.KeyUp += new System.Windows.Forms.KeyEventHandler(this.InputTextBox_KeyUp);
             // 
+            // button1
+            // 
+            this.button1.Enabled = false;
+            this.button1.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.button1.Location = new System.Drawing.Point(192, 111);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(39, 38);
+            this.button1.TabIndex = 24;
+            this.button1.UseVisualStyleBackColor = true;
+            // 
             // Form1
             // 
             this.AcceptButton = this.EqualsButton;
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(244, 287);
+            this.Controls.Add(this.button1);
             this.Controls.Add(this.InputTextBox);
             this.Controls.Add(this.HistoryTextBox);
             this.Controls.Add(this.SqrtButton);
@@ -373,6 +381,7 @@
         private System.Windows.Forms.Button SqrtButton;
         private System.Windows.Forms.TextBox HistoryTextBox;
         private System.Windows.Forms.TextBox InputTextBox;
+        private System.Windows.Forms.Button button1;
     }
 }
 

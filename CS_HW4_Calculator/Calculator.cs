@@ -12,7 +12,7 @@ namespace CS_HW4_Calculator
         public double DisplayValue = 0.0;
 
         //A decimal that stores the result currently displayed by the calculator.
-        public decimal CurrentValue = 0.0m;
+        public static double CurrentValue = 0.0;
 
         //A double that stores the value of the first operand.
         public static double Operand1 = 0.0;
@@ -64,17 +64,21 @@ namespace CS_HW4_Calculator
         /// <summary>
         /// Sets the operand1 and currentValue fields to the value that’s passed to it, and sets the op field to Operation.Subtract.
         /// </summary>
-        /// <param name=""></param>
+        /// <param name=" "></param>
         public void Subtract(double DisplayValue)
         {
+            //MessageBox.Show("Operand1 = " + Operand1 + "\n"
+            //+ "DisplayValue = " + DisplayValue);
             Operand1 = DisplayValue;
             Op = Operator.Subtract;
+            //MessageBox.Show("Operand1 = " + Operand1 + "\n"
+            //                + "DisplayValue = " + DisplayValue);
         }
 
         /// <summary>
         /// Sets the operand1 and currentValue fields to the value that’s passed to it, and sets the op field to Operation.Multiply.
         /// </summary>
-        /// <param name=""></param>
+        /// <param name=" "></param>
         public void Multiply(double DisplayValue)
         {
             Operand1 = DisplayValue;
@@ -84,7 +88,7 @@ namespace CS_HW4_Calculator
         /// <summary>
         /// Sets the operand1 and currentValue fields to the value that’s passed to it, and sets the op field to Operation.Divide.
         /// </summary>
-        /// <param name=""></param>
+        /// <param name=" "></param>
         public void Divide(double DisplayValue)
         {
             Operand1 = DisplayValue;
@@ -133,10 +137,11 @@ namespace CS_HW4_Calculator
         {
             const double Zero = 0.0;
             const int RoundTo = 14;
-            Operand2 = DisplayValue;
+            Operand1 = DisplayValue;
+            Operand2 = CurrentValue;
 
-            try
-            {
+            //try
+            //{
                 switch (Op)
                 {
                     case Operator.Add:
@@ -172,12 +177,14 @@ namespace CS_HW4_Calculator
                         //doNothing();
                         break;
                 }
-                return Convert.ToDecimal(Operand1);
-            }
-            catch (OverflowException Ex)
-            {
-                return 0;
-            }
+                CurrentValue = Operand1;
+                return Convert.ToDecimal(CurrentValue);
+                //return Convert.ToDecimal(Operand1);
+            //}
+            //catch (OverflowException ex)
+            //{
+            //    return 0;
+            //}
         }
 
         /// <summary>
@@ -185,7 +192,8 @@ namespace CS_HW4_Calculator
         /// </summary>
         public void Clear()
         {
-            CurrentValue = 0.0m;
+            CurrentValue = 0.0;
+            DisplayValue = 0.0;
             Operand1 = 0.0;
             Operand2 = 0.0;
             Op = Operator.None;
