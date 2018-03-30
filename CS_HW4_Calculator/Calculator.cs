@@ -42,6 +42,7 @@ namespace CS_HW4_Calculator
             Op = Operator.None;
         }
 
+
         /// <summary>
         /// Gets the value of the CurrentValue field.
         /// </summary>
@@ -55,7 +56,7 @@ namespace CS_HW4_Calculator
         public void Add(double DisplayValue)
         {
             //MessageBox.Show("Operand1 = " + Operand1 + "\n"
-            //                + "DisplayValue = " + DisplayValue);
+                            //+ "DisplayValue = " + DisplayValue);
             Operand1 = DisplayValue;
             Op = Operator.Add;
         }
@@ -126,10 +127,12 @@ namespace CS_HW4_Calculator
         /// <summary>
         /// Sets the operand2 field to the value that’s passed to it. Then, performs the operation specified by the op field on the operand1 and operand2 fields, and stores the result in the operand1 field.
         /// </summary>
-        /// <param name=""></param>
+        /// <param name="DisplayValue"></param>
+        /// <returns>Operand1 as a decimal value</returns>
         public decimal Equals(double DisplayValue)
         {
             const double Zero = 0.0;
+            const int RoundTo = 14;
             Operand2 = DisplayValue;
 
             try
@@ -159,18 +162,17 @@ namespace CS_HW4_Calculator
                         Operand1 = Math.Sqrt(Operand1);
                         break;
                     case Operator.Reciprocal:
-                        Operand1 = 1 / Operand1;
+                        Operand1 = Math.Round(1.0 / Operand1, RoundTo);
                         break;
                     case Operator.Inverse:
                         Operand1 = Operand1 * -1;
                         break;
+                    case Operator.None:
                     default:
                         //doNothing();
                         break;
                 }
-
                 return Convert.ToDecimal(Operand1);
-
             }
             catch (OverflowException Ex)
             {
@@ -184,7 +186,7 @@ namespace CS_HW4_Calculator
         public void Clear()
         {
             CurrentValue = 0.0m;
-            Calculator.Operand1 = 0.0;
+            Operand1 = 0.0;
             Operand2 = 0.0;
             Op = Operator.None;
         }

@@ -196,7 +196,6 @@
             this.AddButton.TabIndex = 21;
             this.AddButton.Text = "+";
             this.AddButton.UseVisualStyleBackColor = true;
-            this.AddButton.Click += new System.EventHandler(this.AddButton_Click_1);
             // 
             // DivideButton
             // 
@@ -207,7 +206,6 @@
             this.DivideButton.TabIndex = 8;
             this.DivideButton.Text = "/";
             this.DivideButton.UseVisualStyleBackColor = true;
-            this.DivideButton.Click += new System.EventHandler(this.DivideButton_Click_1);
             // 
             // MultiplyButton
             // 
@@ -218,7 +216,6 @@
             this.MultiplyButton.TabIndex = 13;
             this.MultiplyButton.Text = "*";
             this.MultiplyButton.UseVisualStyleBackColor = true;
-            this.MultiplyButton.Click += new System.EventHandler(this.MultiplyButton_Click_1);
             // 
             // SubtractButton
             // 
@@ -229,7 +226,6 @@
             this.SubtractButton.TabIndex = 18;
             this.SubtractButton.Text = "-";
             this.SubtractButton.UseVisualStyleBackColor = true;
-            this.SubtractButton.Click += new System.EventHandler(this.SubtractButton_Click_1);
             // 
             // CEButton
             // 
@@ -262,7 +258,6 @@
             this.RecipButton.TabIndex = 14;
             this.RecipButton.Text = "1/x";
             this.RecipButton.UseVisualStyleBackColor = true;
-            this.RecipButton.Click += new System.EventHandler(this.RecipButton_Click_1);
             // 
             // PlusMinusButton
             // 
@@ -273,7 +268,6 @@
             this.PlusMinusButton.TabIndex = 4;
             this.PlusMinusButton.Text = "+/-";
             this.PlusMinusButton.UseVisualStyleBackColor = true;
-            this.PlusMinusButton.Click += new System.EventHandler(this.PlusMinusButton_Click);
             // 
             // SqrtButton
             // 
@@ -284,7 +278,6 @@
             this.SqrtButton.TabIndex = 9;
             this.SqrtButton.Text = "√";
             this.SqrtButton.UseVisualStyleBackColor = true;
-            this.SqrtButton.Click += new System.EventHandler(this.SqrtButton_Click_1);
             // 
             // HistoryTextBox
             // 
@@ -309,6 +302,7 @@
             this.InputTextBox.TabIndex = 0;
             this.InputTextBox.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             this.InputTextBox.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.InputTextBox_KeyPress_1);
+            this.InputTextBox.KeyUp += new System.Windows.Forms.KeyEventHandler(this.InputTextBox_KeyUp);
             // 
             // Form1
             // 
