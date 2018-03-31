@@ -1,13 +1,6 @@
 ﻿using System;
-using System.Collections;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
 using System.Media;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace CS_HW4_Calculator
@@ -15,21 +8,24 @@ namespace CS_HW4_Calculator
     public partial class Form1 : Form
     {
         List<string> HistoryList = new List<string>();
-
         double Value = 0.0;
         string Operation = "";
         string Function = "";
-        bool OperatorPressed = false;
-        private bool EqualsPressed = false;
         string LastOperation = "";
-
+        bool OperatorPressed = false;
+        bool FunctionPressed = false;
+        bool EqualsPressed = false;
 
         public Form1()
         {
             InitializeComponent();
         }
 
-
+        /// <summary>
+        /// Sets initial form state.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void Form1_Load_1(object sender, EventArgs e)
         {
             InputTextBox.Text = "0";
@@ -68,7 +64,11 @@ namespace CS_HW4_Calculator
             HistoryButton.Click += new EventHandler(HistoryButton_Click);
         }
 
-
+        /// <summary>
+        /// EventHandler for Num_Click
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void Num_Click(object sender, EventArgs e)
         {
             if ((InputTextBox.Text == "0") || OperatorPressed || EqualsPressed)
@@ -78,6 +78,9 @@ namespace CS_HW4_Calculator
             } else { /*doNothing();*/ }
 
             OperatorPressed = false;
+            FunctionPressed = false;
+            EqualsPressed = false;
+
             var Button = sender as Button;
             const int MaxLength = 16;
 
@@ -98,47 +101,54 @@ namespace CS_HW4_Calculator
             }
         }
 
+        /// <summary>
+        /// EventHandler for Operator_Click
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void Operator_Click(object sender, EventArgs e)
         {
-            var Button = sender as Button;
-            
-
             if (!Value.Equals(0.0))
             {
-                OperatorPressed = true;
-                Operation = Button.Text;
-
-                LastOperation = InputTextBox.Text + " " + Operation + " ";
-                HistoryTextBox.Text += LastOperation;
-
-                EqualsPressed = false;
                 ResolveOperators();
+
+                var Button = sender as Button;
+                OperatorPressed = true;
+                EqualsPressed = false;
+                Operation = Button.Text;
+                LastOperation = InputTextBox.Text + " " + Operation + " ";
+                HistoryTextBox.Text += LastOperation; 
             }
             else
             {
+                var Button = sender as Button;
                 OperatorPressed = true;
+                EqualsPressed = false;
                 Operation = Button.Text;
-
                 LastOperation = InputTextBox.Text + " " + Operation + " ";
                 HistoryTextBox.Text += LastOperation;
 
                 Value = Double.Parse(InputTextBox.Text);
-
-                EqualsPressed = false;
-                //ResolveOperators();
             }
+
+            InputTextBox.Text = Value.ToString();
         }
 
+        /// <summary>
+        /// EventHandler for FunctionClick
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void Function_Click(object sender, EventArgs e)
         {
-
+            FunctionPressed = true;
+            OperatorPressed = false;
             var Button = sender as Button;
             var LastOperation = "";
             Function = Button.Text;
             
             switch (Function)
             {
-
                 case "√":
                     LastOperation = "sqrt(" + InputTextBox.Text + ") ";
                     break;
@@ -152,26 +162,138 @@ namespace CS_HW4_Calculator
                     //doNothing();
                     break;
             }
-            //HistoryList.Add(LastOperation);
             HistoryTextBox.Text = LastOperation;
-
             EqualsPressed = false;
             ResolveOperators();
         }
 
+        /// <summary>
+        /// Performs "Equals" Calculations
+        /// </summary>
+        private void ResolveOperators()
+        {
+            bool InputValid = Double.TryParse(InputTextBox.Text, out var HiddenValue);
+
+            if (InputValid)
+            {
+                if (Operation != "")
+                {
+                    var DivByZero = false;
+
+                    switch (Operation)
+                    {
+                        case "+":
+                            Value += HiddenValue;
+                            InputTextBox.Text = Value.ToString();
+                            break;
+                        case "-":
+                            Value -= HiddenValue;
+                            InputTextBox.Text = Value.ToString();
+                            break;
+                        case "*":
+                            Value *= HiddenValue;
+                            InputTextBox.Text = Value.ToString();
+                            break;
+                        case "/":
+                            if (HiddenValue.Equals(0.0))
+                            {
+                                DivByZero = true;
+                                MessageBox.Show("Cannot divide by zero");
+                                ClearButton.PerformClick();
+                            }
+                            else
+                            {
+                                Value /= HiddenValue;
+                                InputTextBox.Text = Value.ToString();
+                            }
+                            break;
+                        default:
+                            //doNothing();
+                            break;
+                    }
+
+                    if (EqualsPressed && !DivByZero)
+                    {
+                        HistoryTextBox.Text += (HiddenValue.ToString() + " = " + Value.ToString());
+                        HistoryList.Add(HistoryTextBox.Text);
+                        HistoryTextBox.Clear();
+                    } else { /*doNothing();*/ }
+                }
+                else if (Function != "")
+                {
+                    switch (Function)
+                    {
+                        case "√":
+                            Value = Math.Sqrt(Double.Parse(InputTextBox.Text));
+                            InputTextBox.Text = Value.ToString();
+                            break;
+                        case "1/x":
+                            Value = (1.0 / Double.Parse(InputTextBox.Text));
+                            InputTextBox.Text = Value.ToString();
+                            break;
+                        case "+/-":
+                            Value = (-1 * Double.Parse(InputTextBox.Text));
+                            InputTextBox.Text = Value.ToString();
+                            break;
+                        default:
+                            //doNothing();
+                            break;
+                    }
+                    HistoryList.Add(HistoryTextBox.Text + " = " + InputTextBox.Text);
+                }
+
+                if (!OperatorPressed && !FunctionPressed)
+                {
+                    InputTextBox.Text = HiddenValue.ToString();
+                } else { /*doNothing();*/ }
+                
+                if (!OperatorPressed && EqualsPressed)
+                {
+                    InputTextBox.Text = Value.ToString();
+                } else { /*doNothing();*/ }
+                
+                if (FunctionPressed || EqualsPressed)
+                {
+                    InputTextBox.Text = Value.ToString();
+                    Value = 0;
+                }  else { /*doNothing();*/ }
+            }
+            else
+            {
+                MessageBox.Show("You broke it  :'( ");
+            }
+        }
+
+        /// <summary>
+        /// EventHandler for EqualsButton_Click
+        /// Calls method to perform "Equals" calculations.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void EqualsButton_Click(object sender, EventArgs e)
         {
             EqualsPressed = true;
             ResolveOperators();
         }
 
+        /// <summary>
+        /// EventHandler for CEButton_Click
+        /// Resets state of text box to default values.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void CEButton_Click(object sender, EventArgs e)
         {
             InputTextBox.Text = "0";
             InputTextBox.Select(InputTextBox.Text.Length, 0);
         }
 
-
+        /// <summary>
+        /// EventHandler for BackButton_Click
+        /// Allows user to delete one character per click from the input text.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void BackButton_Click(object sender, EventArgs e)
         {
             if (InputTextBox.TextLength != 0)
@@ -189,6 +311,12 @@ namespace CS_HW4_Calculator
             }
         }
 
+        /// <summary>
+        /// EventHandler for ClearButton_Click
+        /// Resets the form to default values.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void ClearButton_Click(object sender, EventArgs e)
         {
             Value = 0.0;
@@ -202,6 +330,12 @@ namespace CS_HW4_Calculator
             InputTextBox.Select(InputTextBox.Text.Length, 0);
         }
 
+        /// <summary>
+        /// EventHandler for HistoryButton_Click
+        /// Shows calculation history.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void HistoryButton_Click(object sender, EventArgs e)
         {
             Form2 HistoryForm = new Form2();
@@ -210,91 +344,14 @@ namespace CS_HW4_Calculator
             HistoryForm.Show();
         }
 
-        private void ResolveOperators()
-        {
-            var HiddenValue = Double.Parse(InputTextBox.Text);
 
-            if (Operation != "")
-            {
-                var DivByZero = false;
-                InputTextBox.Clear();
-                switch (Operation)
-                {
-                    case "+": 
-                        Value += HiddenValue;
-                        break;
-                    case "-":
-                        Value -= HiddenValue;
-                        break;
-                    case "*":
-                        Value *= HiddenValue;
-                        break;
-                    case "/":
-                        if (HiddenValue.Equals(0.0))
-                        {
-                            DivByZero = true;
-                            MessageBox.Show("Cannot divide by zero");
-                            ClearButton.PerformClick();
-                        }
-                        else
-                        {
-                            Value /= HiddenValue;
-                        }
-                        break;
-                    default:
-                        //doNothing();
-                        break;
-                }
 
-                if (EqualsPressed && !DivByZero)
-                {
-                    HistoryTextBox.Text += (HiddenValue.ToString() + " = " + Value.ToString());
-                    HistoryList.Add(HistoryTextBox.Text);
-                    HistoryTextBox.Clear();
-                }
-                else { /*doNothing();*/ }
-            }
-            else if (Function != "")
-            {
-                switch (Function)
-                {
-                    case "√":
-                        Value = Math.Sqrt(Double.Parse(InputTextBox.Text));
-                        InputTextBox.Text = Value.ToString();
-                        break;
-                    case "1/x":
-                        Value = (1.0 / Double.Parse(InputTextBox.Text));
-                        InputTextBox.Text = Value.ToString();
-                        break;
-                    case "+/-":
-                        Value = (-1 * Double.Parse(InputTextBox.Text));
-                        InputTextBox.Text = Value.ToString();
-                        break;
-                    default:
-                        //doNothing();
-                        break;
-                }
-                HistoryList.Add(HistoryTextBox.Text + " = " + InputTextBox.Text);
-            }
-
-            if ((Operation == "") && (Function == ""))
-            {
-                InputTextBox.Text = HiddenValue.ToString();
-            }
-            else
-            {
-                InputTextBox.Text = Value.ToString();
-            }
-            
-
-            if (Function != "" || EqualsPressed)
-            {
-                Value = 0;
-            } else { /*doNothing();*/ }
-
-        }
-
-        
+        /// <summary>
+        /// EventHandler for InputTextBox_KeyPress_1
+        /// Allows use of NumPad for calculator control.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void InputTextBox_KeyPress_1(object sender, KeyPressEventArgs e)
         {
             //ASCII Values as int constants
@@ -354,6 +411,12 @@ namespace CS_HW4_Calculator
             else { /*doNothing();*/ }
         }
 
+        /// <summary>
+        /// EventHandler for InputTextBox_KeyUp
+        /// Resets state of text box to default values.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void InputTextBox_KeyUp(object sender, KeyEventArgs e)
         {
             if (InputTextBox.Text.Length == 0)
@@ -363,6 +426,9 @@ namespace CS_HW4_Calculator
             else { /*doNothing();*/ }
         }
 
+        /// <summary>
+        /// Resets state of text box to default values.
+        /// </summary>
         private void FixTextBox()
         {
             if ((InputTextBox.Text == "0") || OperatorPressed)

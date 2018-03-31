@@ -50,6 +50,7 @@ namespace CS_HW4_Calculator
             this.ClientSize = new System.Drawing.Size(292, 382);
             this.Controls.Add(this.HistoryRichTextBox);
             this.Name = "Form2";
+            this.ShowIcon = false;
             this.Text = "History";
             this.ResumeLayout(false);
 

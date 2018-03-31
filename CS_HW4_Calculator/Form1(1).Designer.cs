@@ -357,7 +357,7 @@
             this.MaximumSize = new System.Drawing.Size(260, 325);
             this.MinimumSize = new System.Drawing.Size(260, 325);
             this.Name = "Form1";
-            this.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
+            this.RightToLeft = System.Windows.Forms.RightToLeft.No;
             this.ShowIcon = false;
             this.Text = "Calculator";
             this.Load += new System.EventHandler(this.Form1_Load_1);

@@ -9,8 +9,6 @@ namespace CS_HW4_Calculator
     /// </summary>
     internal class Calculator
     {
-        public double DisplayValue = 0.0;
-
         //A decimal that stores the result currently displayed by the calculator.
         public static double CurrentValue = 0.0;
 
@@ -23,7 +21,9 @@ namespace CS_HW4_Calculator
         //An Operator type that stores a member of the Operator enumeration.
         public Operator Op = Operator.None;
 
-        //An enumeration with these constants: Add, Subtract, Multiply, Divide, and None.
+        /// <summary>
+        /// An enumeration with these constants: Add, Subtract, Multiply, Divide, and None.
+        /// </summary>
         public enum Operator
         {
             Add,
@@ -35,18 +35,14 @@ namespace CS_HW4_Calculator
             Inverse,
             None
         };
-
-        //Creates a Calculator object with default values. The default value for the op field is Operator.None.
+        
+        /// <summary>
+        /// Creates a Calculator object with default values. The default value for the op field is Operator.None.
+        /// </summary>
         public Calculator()
         {
             Op = Operator.None;
         }
-
-
-        /// <summary>
-        /// Gets the value of the CurrentValue field.
-        /// </summary>
-        //public decimal CurrentValue { get; }
 
         /// <summary>
         /// Sets the operand1 and currentValue fields to the value that’s passed to it, and sets the op field to Operation.Add.
@@ -140,51 +136,43 @@ namespace CS_HW4_Calculator
             Operand1 = DisplayValue;
             Operand2 = CurrentValue;
 
-            //try
-            //{
-                switch (Op)
-                {
-                    case Operator.Add:
-                        Operand1 += Operand2;
-                        break;
-                    case Operator.Subtract:
-                        Operand1 -= Operand2;
-                        break;
-                    case Operator.Multiply:
-                        Operand1 *= Operand2;
-                        break;
-                    case Operator.Divide:
-                        if (Operand2.Equals(Zero))
-                        {
-                            MessageBox.Show("Cannot divide by zero.");
-                        }
-                        else
-                        {
-                            Operand1 /= Operand2;
-                        }
-                        break;
-                    case Operator.SquareRoot:
-                        Operand1 = Math.Sqrt(Operand1);
-                        break;
-                    case Operator.Reciprocal:
-                        Operand1 = Math.Round(1.0 / Operand1, RoundTo);
-                        break;
-                    case Operator.Inverse:
-                        Operand1 = Operand1 * -1;
-                        break;
-                    case Operator.None:
-                    default:
-                        //doNothing();
-                        break;
-                }
-                CurrentValue = Operand1;
-                return Convert.ToDecimal(CurrentValue);
-                //return Convert.ToDecimal(Operand1);
-            //}
-            //catch (OverflowException ex)
-            //{
-            //    return 0;
-            //}
+            switch (Op)
+            {
+                case Operator.Add:
+                    Operand1 += Operand2;
+                    break;
+                case Operator.Subtract:
+                    Operand1 -= Operand2;
+                    break;
+                case Operator.Multiply:
+                    Operand1 *= Operand2;
+                    break;
+                case Operator.Divide:
+                    if (Operand2.Equals(Zero))
+                    {
+                        MessageBox.Show("Cannot divide by zero.");
+                    }
+                    else
+                    {
+                        Operand1 /= Operand2;
+                    }
+                    break;
+                case Operator.SquareRoot:
+                    Operand1 = Math.Sqrt(Operand1);
+                    break;
+                case Operator.Reciprocal:
+                    Operand1 = Math.Round(1.0 / Operand1, RoundTo);
+                    break;
+                case Operator.Inverse:
+                    Operand1 = Operand1 * -1;
+                    break;
+                case Operator.None:
+                default:
+                    //doNothing();
+                    break;
+            }
+            CurrentValue = Operand1;
+            return Convert.ToDecimal(CurrentValue);
         }
 
         /// <summary>
@@ -193,7 +181,6 @@ namespace CS_HW4_Calculator
         public void Clear()
         {
             CurrentValue = 0.0;
-            DisplayValue = 0.0;
             Operand1 = 0.0;
             Operand2 = 0.0;
             Op = Operator.None;
